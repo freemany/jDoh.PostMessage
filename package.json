@@ -1,0 +1,30 @@
+{
+  "name": "jDoh.PostMessage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:unit": "mocha ./test/unit/**/* --require test/global.js",
+    "test:unit:watch": "mocha ./test/unit/**/* --require test/global.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freemany/jsEventManager.git"
+  },
+  "keywords": [],
+  "author": "Freeman Yam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freemany/jsDoh.PostMessage/issues"
+  },
+  "homepage": "https://github.com/freemany/jsDoh.PostMessage#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^5.0.1",
+    "eslint-config-google": "^0.9.1",
+    "mocha": "^5.2.0"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
