@@ -10,12 +10,25 @@ class PostMesssge {
         this.errOnCallback = () => {};
         this.errSendCallback = () => {};
         this.status = null;
+        this.window = null;
+    }
+
+    setWidow(window) {
+        this.window = window;
+    }
+
+    _getWindow() {
+        if (null === this.window) {
+            return window;
+        }
+
+        return this.window;
     }
 
     on(channel, callback) {
         this.onCallback = callback;
         this.channel = channel;
-        window.addEventListener('message', this._onChannel.bind(this), true);
+        this._getWindow().addEventListener('message', this._onChannel.bind(this), true);
 
         return this;
     }
@@ -76,7 +89,7 @@ class PostMesssge {
         this.status = '__sending__';
 
         const onFunc = this._onReceive.bind(this);
-        window.addEventListener('message', onFunc, true);
+        this._getWindow().addEventListener('message', onFunc, true);
         setTimeout(() => {
             window.removeEventListener('message', onFunc, true);
             if ('__responsed__' === this.status) {
@@ -94,7 +107,8 @@ class PostMesssge {
             token: this.sendToken,
             type:'ask',
         };
-        this.options.target.postMessage(JSON.stringify(msg), this.options.targetDomain);
+
+        return this.options.target.postMessage(JSON.stringify(msg), this.options.targetDomain);
     }
 }
 
