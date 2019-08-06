@@ -128,7 +128,9 @@
     });
 
     pm.on('foo', (msg, send) => {
-        setTimeout(() => {send(msg + ' from parent', true);}, 0);
+        if (msg.action === 'foo') {
+            setTimeout(() => {send(msg.message + ' (action=foo) from parent', true);}, 0);
+        }
     });
 </script>
 </body>

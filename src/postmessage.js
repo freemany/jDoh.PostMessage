@@ -1,5 +1,7 @@
 class PostMesssge {
+
     constructor(opts) {
+        this.msgKey = '____MESSAGE____';
         this.defaults = {timeout: 2000};
         this.options = Object.assign(this.defaults, opts);
         this.sendToken = null;
@@ -58,7 +60,7 @@ class PostMesssge {
 
         this.onToken = response.token;
 
-        this.onCallback(response.message, this.response.bind(this));
+        this.onCallback(this._getMessage(response.message), this.response.bind(this));
     }
 
     _onReceive(e) {
@@ -79,7 +81,30 @@ class PostMesssge {
             return;
         }
 
-        this.sendCallback(response.message);
+        this.sendCallback(this._getMessage(response.message));
+    }
+
+    _setMessage(message) {
+        if (typeof message === 'object') {
+            return JSON.stringify(message);
+        }
+        const msg = {};
+        msg[this.msgKey] = message;
+
+        return JSON.stringify(msg);
+    }
+
+    _getMessage(message) {
+        try {
+            const msg = JSON.parse(message);
+            if (msg[this.msgKey] && Object.keys(obj).length === 1) {
+                return msg[this.msgKey];
+            }
+
+            return message;
+        } catch(e) {
+            return message;
+        }
     }
 
     send(message, callback, errCallback) {
@@ -103,7 +128,7 @@ class PostMesssge {
 
         const msg = {
             channel: this.options.channel,
-            message: message,
+            message: this._setMessage(message),
             token: this.sendToken,
             type:'ask',
         };

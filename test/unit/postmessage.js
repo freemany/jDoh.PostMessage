@@ -30,7 +30,9 @@ describe('PostMessage', () => {
         });
 
         const result = p.send(message);
-        expect(result.message).to.eql(message);
+        const msg = {};
+        msg[p.msgKey] = message;
+        expect(result.message).to.eql(JSON.stringify(msg));
         expect(result.channel).to.eql(channel);
         expect(result.type).to.eql('ask');
     });

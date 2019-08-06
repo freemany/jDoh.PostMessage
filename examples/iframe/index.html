@@ -120,7 +120,7 @@
     });
 
     $('#send-btn').click(function() {
-        pm.send(Math.random(), (msg) => {
+        pm.send({message: Math.random(), action: 'foo'}, (msg) => {
             $('h2').text(msg);
         }, () => {} )
     });
