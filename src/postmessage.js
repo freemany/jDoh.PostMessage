@@ -39,7 +39,7 @@ class PostMesssge {
         this.options.target.postMessage(JSON.stringify({
             token: this.onToken,
             channel: this.channel,
-            message: msg,
+            message: this._setMessage(msg),
             type: 'answer',
         }), this.options.targetDomain)
     }
@@ -97,7 +97,7 @@ class PostMesssge {
     _getMessage(message) {
         try {
             const msg = JSON.parse(message);
-            if (msg[this.msgKey] && Object.keys(obj).length === 1) {
+            if (msg[this.msgKey] && Object.keys(msg).length === 1) {
                 return msg[this.msgKey];
             }
 
