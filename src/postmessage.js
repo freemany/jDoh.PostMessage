@@ -101,7 +101,7 @@ class PostMesssge {
                 return msg[this.msgKey];
             }
 
-            return message;
+            return msg;
         } catch(e) {
             return message;
         }
