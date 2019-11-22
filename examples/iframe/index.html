@@ -114,13 +114,13 @@
         channel: 'foo',
     });
     pm.on('foo', (msg, send) => {
-        setTimeout(() => {send(msg + ' from iframe', true);}, 0);
+        setTimeout(() => {send('message: ' + msg + ' echo from iframe', true);}, 0);
 
         $('h1').text(msg);
     });
 
     $('#send-btn').click(function() {
-        pm.send({message: Math.random(), action: 'foo'}, (msg) => {
+        pm.send({message: Math.random(), action: 'bar'}, (msg) => {
             $('h2').text(msg);
         }, () => {} )
     });

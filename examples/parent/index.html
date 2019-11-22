@@ -106,8 +106,10 @@
 <body>
 <h1></h1>
 <iframe src="http://localhost:9999" width="500" height="300"></iframe>
+<h2></h2>
 <input type="text" id="message">
 <button id="send-btn">Send</button>
+<button id="send-no-response-btn">Send with no response</button>
 <button id="remove-btn">remove</button>
 <script>
 
@@ -119,6 +121,22 @@
         target: $('iframe')[0].contentWindow,
         targetDomain: 'http://localhost:9999',
     });
+    const pmNoResponse = new PostMesssge({
+        channel: 'invalid_channel',
+        target: $('iframe')[0].contentWindow,
+        targetDomain: 'http://localhost:9999',
+    });
+    const pmNoResponse1 = new PostMesssge({
+        channel: 'fool',
+        target: $('iframe')[0].contentWindow,
+        targetDomain: 'http://invalid.io:0000',
+    });
+    const pmNoResponse2 = new PostMesssge({
+        channel: 'invalid_channel',
+        target: null,
+        targetDomain: 'http://localhost:9999',
+    });
+
     $('#send-btn').click(function() {
         pm.send($('#message').val(), (msg) => {
             $('h1').text(msg);
@@ -127,9 +145,18 @@
         });
     });
 
+    $('#send-no-response-btn').click(function() {
+        pmNoResponse.send($('#message').val(), (msg) => {
+            $('h1').text(msg);
+        }, (err) => {
+            alert('Error:' + JSON.stringify(err));
+        });
+    });
+
     pm.on('foo', (msg, send) => {
-        if (msg.action === 'foo') {
-            setTimeout(() => {send(msg.message + ' (action=foo) from parent', true);}, 0);
+        if (msg.action === 'bar') {
+            $('h2').text(msg.message);
+            setTimeout(() => {send(msg.message + ' (action=bar) echo from parent', true);}, 0);
         }
     });
 </script>
