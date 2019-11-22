@@ -13,4 +13,5 @@ $ php -S localhost:8888
 Open http://localhost:8888 
 
 
-
+### How to run the unit tests
+$ npm run test:unit
